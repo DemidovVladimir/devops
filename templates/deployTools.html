@@ -1,0 +1,176 @@
+<template name="deploy">
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h3>{{title}}</h3>
+                <h4 class="text-center">First lets create droplet via digitalocean api</h4>
+                <h4 class="text-center">Then we need to create rsa key in our node part</h4>
+                <h4 class="text-center">Then we need to init git via ssh from our node to remote</h4>
+                <h4 class="text-center">Then we need to install docker via ssh</h4>
+                <h4 class="text-center">Then we need to maintain dockerfile</h4>
+                <h4 class="text-center">Then we need to run dockerfile to create our web app</h4>
+            </div>
+            <div class="well">
+                <h2 class="text-center" style="color: #003eff">Let's start!</h2>
+            </div>
+
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="fiveDollarDroplet">5 dollar droplet</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <form enctype="multipart/form-data" class="dropletInfoClass">
+                                <input type="text" name="dropletTitle" class="form-control" aria-label="Droplet title" placeholder="Droplet title" id="dropletTitle">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jumbotron">
+                <div class="row">
+                    <h2 class="text-center">You have allready created: </h2>
+                    {{#each createdDroplets}}
+
+                        <div class="media">
+                            <div class="media-left media-middle col-sm-1">
+                                <a>
+                                    <img class="media-object img-responsive" src="/ubuntu.png" alt="ubuntu logo">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{dropletTitle}}</h4>
+                                <p>{{date}}</p>
+                                <a class="deleteDroplet btn btn-sm btn-danger">Delete droplet</a>
+                                <a class="uploadApp btn btn-sm btn-success">Upload app</a>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="deleteImages">Delete images</a></li>
+                                </ul>
+                            </div>
+                            <form enctype="multipart/form-data" class="inputFile">
+                                <input type="file" name="file" class="form-control myFileInput" aria-label="File" id="myFileInput">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                    {{#each images}}
+                        <img src="{{this.collectionName}}-{{this._id}}-{{this.name}}">
+                    {{/each}}
+
+
+            <div class="btn-group" role="group" aria-label="Working with deployment">
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">File system
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" class="readFile">Read</a></li>
+                        <li role="presentation"><a role="menuitem" class="writeFile">Write</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Create droplet
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation">
+                            <a role="menuitem" class="fiveDollarDroplet">5 dollar droplet</a>
+                        </li>
+                        {{#each created}}
+                            <li role="presentation"><a role="menuitem" class="deleteDroplet">Delete droplet</a></li>
+                        {{/each}}
+                        <li role="presentation"><a role="menuitem" class="createPublicSSH">Create public SSH</a></li>
+                        <li role="presentation"><a role="menuitem" class="checkHTTP">Check HTTP</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Install git
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                        <li role="presentation"><a role="menuitem" class="sshAccess">Access via SSH</a></li>
+                        <li role="presentation"><a role="menuitem" class="sshGitInstall">Install git on server</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu3" data-toggle="dropdown">Install docker
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu3">
+                        <li role="presentation"><a role="menuitem" href="#">#</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu4" data-toggle="dropdown">Clone or pull repo with dockerfile
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu4">
+                        <li role="presentation"><a role="menuitem" href="#">#</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu5" data-toggle="dropdown">Run dockerfile
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu5">
+                        <li role="presentation"><a role="menuitem" href="#">#</a></li>
+                    </ul>
+                </div>
+                <div class="btn btn-default dropdown">
+                    <button class="dropdown-toggle" type="button" id="menu6" data-toggle="dropdown">DNS to domain
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu6">
+                        <li role="presentation"><a role="menuitem" href="#">#</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="well">
+                <h2 class="text-center" style="color: green">That's it!</h2>
+            </div>
+        </div>
+
+        {{#each results}}
+            <pre>{{git}}</pre>
+        {{/each}}
+
+        {{#if list}}
+            {{#each list}}
+                {{> droplet}}
+            {{/each}}
+        {{/if}}
+
+        {{#each info}}
+            {{#if infoOfDroplet.droplet.name}}
+                <h3>{{infoOfDroplet.droplet.name}}</h3>
+            {{/if}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="droplet">
+    {{#if listOfDroplets}}
+        {{#each listOfDroplets.droplets}}
+            <h3>{{name}}</h3>
+        {{/each}}
+    {{/if}}
+</template>
+

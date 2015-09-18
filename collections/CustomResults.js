@@ -1,0 +1,1 @@
+CustomResults = new Mongo.Collection('cresults');
