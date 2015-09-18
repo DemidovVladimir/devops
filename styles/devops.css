@@ -1,0 +1,9 @@
+.navbar-brand{
+    margin-top: -20px;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+.navbar-brand:hover{
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
